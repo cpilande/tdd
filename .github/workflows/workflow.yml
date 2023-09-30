@@ -6,8 +6,10 @@ on:
   pull_request: 
     branches: 
       - main
+
 jobs: 
   build:
+    name: build
     runs-on: ubuntu-latest
     container: 
       image: python:3.9-slim
