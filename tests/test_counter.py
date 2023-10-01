@@ -38,6 +38,7 @@ class CounterTest(TestCase):
         self.assertEqual(result.status_code, status.HTTP_409_CONFLICT)
 
     def test_update_a_counter(self):
+        """It should update a counter"""
         client = app.test_client()
         result = client.post('/counters/new')
 
@@ -54,6 +55,7 @@ class CounterTest(TestCase):
             self.assertEqual(actual, check)
     
     def test_read_counter(self):
+        """It should read a counter"""
         client = app.test_client()
         result = client.post('/counters/new2')
         result = client.get('/counters/new2')
@@ -62,3 +64,16 @@ class CounterTest(TestCase):
 
         result2 = client.get('/counters/doesnotexist')
         self.assertEqual(result2.status_code, status.HTTP_404_NOT_FOUND)
+    
+    def test_delete_counter(self):
+        """It should delete a counter"""
+        client = app.test_client()
+
+        result = client.post('/counters/toDelete')
+        result = client.delete('/counters/toDelete')
+
+        self.assertEqual(result.status_code, status.HTTP_204_NO_CONTENT)
+
+        result = client.delete('/counters/toDelete')
+
+        self.assertEqual(result.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)

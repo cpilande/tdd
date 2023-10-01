@@ -37,3 +37,11 @@ def read_counter(name):
         return {name: COUNTERS[name]}, status.HTTP_200_OK
 
     return name, status.HTTP_404_NOT_FOUND
+
+
+@app.route('/counters/<name>', methods=['DELETE'])
+def delete_counter(name):
+    if name in COUNTERS.keys():
+        del COUNTERS[name]
+        return name, status.HTTP_204_NO_CONTENT
+    return name, status.HTTP_405_METHOD_NOT_ALLOWED
